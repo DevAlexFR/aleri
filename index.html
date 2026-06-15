@@ -63,23 +63,23 @@
   .lede{color:var(--muted);font-size:clamp(1.04rem,1.5vw,1.2rem);max-width:60ch}
 
   /* nav */
-  header.nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .4s,border-color .4s,backdrop-filter .4s,box-shadow .4s;border-bottom:1px solid transparent}
-  header.nav.scrolled{background:rgba(255,255,255,.85);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line);box-shadow:0 6px 30px -18px rgba(23,62,30,.4)}
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#7A5230;border-bottom:1px solid rgba(0,0,0,.18);transition:background .4s,box-shadow .4s}
+  header.nav.scrolled{background:#6A4527;box-shadow:0 10px 28px -14px rgba(0,0,0,.5)}
   .nav-inner{display:flex;align-items:center;justify-content:space-between;height:78px}
-  .brand{display:flex;align-items:center;gap:11px;font-family:"Jost",sans-serif;font-size:1.34rem;font-weight:700;color:var(--green-dark);user-select:none}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Jost",sans-serif;font-size:1.42rem;font-weight:700;letter-spacing:.01em;color:#fff;user-select:none}
   .logo-img{height:40px;width:auto}
   .logo-fallback{display:none;align-items:center;gap:10px}
   .logo-img.hide{display:none}
   .logo-img.hide ~ .logo-fallback{display:flex}
   .logo-fallback .mark{width:32px;height:32px}
   .nav-links{display:flex;gap:30px;align-items:center}
-  .nav-links .item{font-family:"Jost",sans-serif;font-size:.95rem;font-weight:500;color:var(--muted);position:relative;cursor:default;user-select:none}
-  .nav-links .item::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--green);transition:width .3s}
-  .nav-links .item:hover{color:var(--green-deep)}
+  .nav-links .item{font-family:"Jost",sans-serif;font-size:.95rem;font-weight:500;color:#F2E7D6;position:relative;cursor:default;user-select:none}
+  .nav-links .item::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--lime);transition:width .3s}
+  .nav-links .item:hover{color:#fff}
   .nav-links .item:hover::after{width:100%}
   .nav-tag{font-family:"Jost",sans-serif;font-size:.86rem;font-weight:600;background:linear-gradient(120deg,var(--green),var(--teal));color:#fff;padding:10px 20px;border-radius:999px;cursor:default;user-select:none}
   .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:0;padding:8px}
-  .burger span{width:24px;height:2px;background:var(--green-dark);transition:.3s}
+  .burger span{width:24px;height:2px;background:#fff;transition:.3s}
 
   .progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--green),var(--teal),var(--amber),var(--lime));z-index:201}
 
@@ -137,19 +137,84 @@
   .pillar h3{font-size:1.3rem;margin-bottom:10px}
   .pillar p{color:var(--muted);font-size:.94rem}
 
-  /* soluções (acento por espécie) */
-  .species{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--card)}
-  .spec{padding:0 24px 42px;border-right:1px solid var(--line);position:relative;transition:.4s cubic-bezier(.2,.7,.2,1);min-height:312px;display:flex;flex-direction:column;justify-content:flex-end}
-  .spec::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--acc)}
-  .spec:last-child{border-right:0}
-  .spec:hover{background:color-mix(in srgb,var(--acc) 9%,white)}
-  .spec .ic{width:50px;height:50px;color:var(--acc);transition:.4s;margin-bottom:auto;margin-top:42px}
-  .spec:hover .ic{transform:translateY(-6px)}
-  .spec h3{font-size:1.4rem;margin:24px 0 6px}
-  .spec p{color:var(--muted);font-size:.86rem;opacity:0;max-height:0;transition:.4s;overflow:hidden}
-  .spec:hover p{opacity:1;max-height:80px}
-  .spec .tag{font-family:"Jost",sans-serif;font-size:.74rem;font-weight:600;color:var(--acc);letter-spacing:.08em}
+  /* soluções (carrossel full-bleed: a imagem inteira muda no hover) */
+.prodband{
+    position:relative;
+    width:100%;
+    height:clamp(260px,35vw,420px);
+    overflow:hidden;
+    border-radius:24px;
+}
 
+.pb{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    opacity:0;
+    transition:opacity .45s ease;
+
+    will-change:opacity;
+    transform:translateZ(0);
+}
+
+.pb.on{
+    opacity:1;
+}
+
+.pb-zones{
+    position:absolute;
+    inset:0;
+    display:flex;
+    z-index:5;
+}
+
+.pz{
+    flex:1;
+    cursor:pointer;
+    position:relative;
+}
+
+.pz::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.18);
+    transition:.3s;
+}
+
+.pz:hover::before{
+    background:rgba(0,0,0,.38);
+}
+
+.pz-title{
+    position:absolute;
+    left:30px;
+    bottom:40px;
+    color:#fff;
+    z-index:2;
+    transition:.3s;
+}
+
+.pz:hover .pz-title{
+    transform:translateY(-10px);
+}
+
+.pz-title span{
+    display:block;
+    text-transform:uppercase;
+    font-size:13px;
+    letter-spacing:2px;
+    opacity:.8;
+}
+
+.pz-title h3{
+    color:#fff;
+    margin-top:6px;
+    font-size:30px;
+}
   /* ciência */
   .science{display:grid;grid-template-columns:.95fr 1.05fr;gap:60px;align-items:center}
   .micro-vis{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(160deg,#fff,var(--bg-soft));box-shadow:0 30px 60px -34px rgba(23,62,30,.35)}
@@ -234,6 +299,94 @@
   .cd .big{font-family:"Jost",sans-serif;font-weight:600;font-size:1.12rem;color:var(--green-dark)}
   .cd span{display:block;font-size:.8rem;color:var(--muted);font-weight:500;font-family:"Jost",sans-serif}
 
+
+/* ===== SOBRE ===== */
+
+#sobre{
+    padding:120px 0;
+    background:#fff;
+}
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+}
+
+.about-image{
+    text-align:center;
+}
+
+.about-image img{
+    width:100%;
+    max-width:650px;
+    display:block;
+    margin:auto;
+}
+
+.about-tag{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    background:rgba(201,167,92,.12);
+    color:var(--gold);
+    font-size:.9rem;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+.about-content h2{
+    font-size:3rem;
+    line-height:1.1;
+    margin-bottom:25px;
+    color:var(--green-deep);
+}
+
+.about-content p{
+    font-size:1.05rem;
+    line-height:1.9;
+    color:var(--muted);
+    margin-bottom:18px;
+}
+
+.btn-primary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:14px 32px;
+    border-radius:999px;
+
+    background:var(--gold);
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+}
+
+@media(max-width:900px){
+
+    #sobre{
+        padding:80px 0;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+        gap:50px;
+    }
+
+    .about-content h2{
+        font-size:2.2rem;
+    }
+
+}
+
   /* footer */
   footer.ft{background:var(--green-dark);color:#fff;padding:66px 0 40px;margin-top:40px;position:relative;overflow:hidden}
   footer.ft::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--green),var(--teal),var(--amber),var(--rose),var(--lime))}
@@ -251,10 +404,55 @@
   .ft-social span{width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);transition:.3s;cursor:default}
   .ft-social span:hover{color:var(--green-dark);background:var(--lime);border-color:var(--lime)}
   .ft-bottom{margin-top:54px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:.82rem;color:rgba(255,255,255,.6);font-family:"Jost",sans-serif;letter-spacing:.04em}
-
+.hero-image{
+    transform:translateY(calc(var(--scroll) * .15px));
+}
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
   .reveal.in{opacity:1;transform:none}
+.sec-head h2::after{
+    content:'';
+    display:block;
+    width:0;
+    height:3px;
+    background:var(--gold);
+    transition:.8s ease;
+}
+.spark{
+    display:inline-block;
+    animation:pulseSpark 2s infinite;
+}
+.hero-foot{
+    display:flex;
+    gap:60px;
+    white-space:nowrap;
 
+    animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee{
+    from{
+        transform:translateX(100%);
+    }
+
+    to{
+        transform:translateX(-100%);
+    }
+}
+
+@keyframes pulseSpark{
+    0%,100%{
+        transform:scale(1);
+        opacity:.6;
+    }
+
+    50%{
+        transform:scale(1.4);
+        opacity:1;
+    }
+}
+.sec-head.show h2::after{
+    width:120px;
+}
   @media(max-width:1000px){
     .pillars{grid-template-columns:1fr 1fr}
     .species{grid-template-columns:1fr 1fr}
@@ -265,9 +463,9 @@
     .ft-grid{grid-template-columns:1fr 1fr}
   }
   @media(max-width:760px){
-    .nav-links{position:fixed;inset:78px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);padding:10px 28px 24px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .4s}
+    .nav-links{position:fixed;inset:78px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:#7A5230;padding:10px 28px 24px;border-bottom:1px solid rgba(0,0,0,.2);transform:translateY(-130%);transition:transform .4s}
     .nav-links.open{transform:none}
-    .nav-links .item{padding:15px 0;width:100%;border-bottom:1px solid var(--line-2)}
+    .nav-links .item{padding:15px 0;width:100%;border-bottom:1px solid rgba(255,255,255,.14)}
     .nav-tag{display:none}
     .burger{display:flex}
     .hero-grid{grid-template-columns:1fr}
@@ -341,6 +539,100 @@
   </div>
 </section>
 
+<!-- ===== CIÊNCIA ===== -->
+<section id="ciencia" class="soft">
+  <div class="wrap">
+    <div class="science">
+      <div class="micro-vis reveal">
+        <canvas id="microCanvas"></canvas>
+        <span class="micro-cap">// modulação da microbiota intestinal</span>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">A ciência por trás</span>
+        <h2>Tudo começa no intestino.</h2>
+        <p class="lede">A microbiota intestinal é o centro da saúde animal. Nossos aditivos atuam diretamente nesse ecossistema, fortalecendo as colônias benéficas e equilibrando o organismo de dentro para fora.</p>
+        <div class="sci-list">
+          <div class="sci-item"><div class="k">01</div><div class="v"><strong>Modulação seletiva</strong><span>Estímulo às bactérias benéficas e controle dos patógenos oportunistas.</span></div></div>
+          <div class="sci-item"><div class="k">02</div><div class="v"><strong>Integridade da barreira</strong><span>Reforço da mucosa intestinal e da absorção de nutrientes.</span></div></div>
+          <div class="sci-item"><div class="k">03</div><div class="v"><strong>Resposta imune</strong><span>Animais mais resilientes, com menor dependência de antimicrobianos.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOLUÇÕES / CARROSSEL ===== -->
+<section id="solucoes">
+    <div class="wrap">
+        <div class="sec-head reveal">
+            <span class="eyebrow">Soluções por espécie</span>
+            <h2>Nutrição para alta performance e bem-estar.</h2>
+            <p class="lede">
+                Cinco segmentos, uma mesma ciência.
+                Linhas dedicadas que respeitam a fisiologia de cada animal.
+            </p>
+        </div>
+    </div>
+
+    <div class="prodband reveal" id="prodband">
+
+        <img class="pb on"
+             src="https://alerisnutrition.com/wp-content/uploads/2022/01/ruminantes-aleris.jpg">
+
+        <img class="pb"
+             src="https://alerisnutrition.com/wp-content/uploads/2022/01/aves.jpg">
+
+        <img class="pb"
+             src="https://alerisnutrition.com/wp-content/uploads/2022/01/pigs.jpg">
+
+        <img class="pb"
+             src="https://alerisnutrition.com/wp-content/uploads/2024/04/petss.jpg">
+
+        <img class="pb"
+             src="https://alerisnutrition.com/wp-content/uploads/2024/04/aqua-home-.jpg">
+
+        <div class="pb-zones">
+
+            <div class="pz">
+                <div class="pz-title">
+                    <span>Nutrição para</span>
+                    <h3>Ruminantes</h3>
+                </div>
+            </div>
+
+            <div class="pz">
+                <div class="pz-title">
+                    <span>Nutrição para</span>
+                    <h3>Avicultura</h3>
+                </div>
+            </div>
+
+            <div class="pz">
+                <div class="pz-title">
+                    <span>Nutrição para</span>
+                    <h3>Suinocultura</h3>
+                </div>
+            </div>
+
+            <div class="pz">
+                <div class="pz-title">
+                    <span>Nutrição para</span>
+                    <h3>Pets</h3>
+                </div>
+            </div>
+
+            <div class="pz">
+                <div class="pz-title">
+                    <span>Nutrição para</span>
+                    <h3>Aquicultura</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
 <!-- ===== DIFERENCIAIS ===== -->
 <section id="diferenciais" class="soft">
   <div class="wrap">
@@ -378,70 +670,52 @@
   </div>
 </section>
 
-<!-- ===== SOLUÇÕES ===== -->
-<section id="solucoes">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Soluções por espécie</span>
-      <h2>Nutrição para alta performance e bem-estar.</h2>
-      <p class="lede">Cinco segmentos, uma mesma ciência. Linhas dedicadas que respeitam a fisiologia de cada animal.</p>
+
+
+<section id="sobre">
+    <div class="wrap">
+
+        <div class="about-grid">
+
+            <div class="about-image reveal">
+                <img src="https://alerisnutrition.com/wp-content/uploads/2021/09/image1-home1.png"
+                     alt="Sobre a empresa">
+            </div>
+
+            <div class="about-content reveal">
+
+                <span class="about-tag">
+                    Sobre a Empresa
+                </span>
+
+                <h2>
+                    Máxima Performance &
+                    Bem-Estar Animal.
+                </h2>
+
+                <p>
+                    Nossa missão é desenvolver soluções nutricionais
+                    inovadoras que promovam saúde, desempenho e
+                    produtividade para diferentes espécies animais.
+                </p>
+
+                <p>
+                    Trabalhamos com pesquisa, tecnologia e compromisso
+                    para entregar produtos de alta qualidade e resultados
+                    consistentes para nossos parceiros.
+                </p>
+
+                <a href="#contato" class="btn-primary">
+                    Saiba Mais
+                </a>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="species reveal">
-      <div class="spec" style="--acc:var(--gold)">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 18c-2-4-1-7 1-7s3 3 3 6M38 18c2-4 1-7-1-7s-3 3-3 6"/><path d="M12 17c0-3 5-5 12-5s12 2 12 5c0 6-2 13-5 16-2 2-4 3-7 3s-5-1-7-3c-3-3-5-10-5-16z"/><path d="M20 24h.01M28 24h.01"/></svg>
-        <span class="tag">01 / Ruminantes</span>
-        <h3>Ruminantes</h3>
-        <p>Eficiência ruminal e saúde para bovinos de corte e leite.</p>
-      </div>
-      <div class="spec" style="--acc:var(--amber)">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M30 14c4 0 8 3 8 9 0 8-7 13-15 13-7 0-13-4-13-11 0-3 2-5 4-5"/><path d="M14 20c-3 0-5-2-5-5l8 2"/><path d="M30 14l5-4M30 36v4M22 36v3"/></svg>
-        <span class="tag">02 / Avicultura</span>
-        <h3>Avicultura</h3>
-        <p>Integridade intestinal e desempenho para aves de postura e corte.</p>
-      </div>
-      <div class="spec" style="--acc:var(--rose)">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 22c0-6 7-10 16-10s16 4 16 10c0 7-7 12-16 12S8 29 8 22z"/><path d="M16 20c-3-3-5-3-6-1M32 20c3-3 5-3 6-1"/><ellipse cx="24" cy="24" rx="5" ry="4"/><path d="M22 24h.01M26 24h.01"/></svg>
-        <span class="tag">03 / Suinocultura</span>
-        <h3>Suínos</h3>
-        <p>Microbiota equilibrada do desmame ao abate, sem desafios.</p>
-      </div>
-      <div class="spec" style="--acc:var(--violet)">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 14c-2 0-3-3-2-5 2-1 4 1 4 3M32 14c2 0 3-3 2-5-2-1-4 1-4 3"/><path d="M14 18c0-3 4-6 10-6s10 3 10 6c0 8-4 16-10 16s-10-8-10-16z"/><path d="M20 24h.01M28 24h.01M24 28l-2 2h4z"/></svg>
-        <span class="tag">04 / Pets</span>
-        <h3>Pets</h3>
-        <p>Longevidade e bem-estar para cães e gatos de companhia.</p>
-      </div>
-      <div class="spec" style="--acc:var(--teal)">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 24c6-9 18-12 26-7 3 2 5 5 6 7-1 2-3 5-6 7-8 5-20 2-26-7z"/><path d="M34 19l4-5v20l-4-5"/><path d="M16 24h.01"/><path d="M8 24c0 4-2 6-2 6M8 24c0-4-2-6-2-6"/></svg>
-        <span class="tag">05 / Aquicultura</span>
-        <h3>Aquicultura</h3>
-        <p>Sanidade e conversão alimentar para peixes e camarões.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
-<!-- ===== CIÊNCIA ===== -->
-<section id="ciencia" class="soft">
-  <div class="wrap">
-    <div class="science">
-      <div class="micro-vis reveal">
-        <canvas id="microCanvas"></canvas>
-        <span class="micro-cap">// modulação da microbiota intestinal</span>
-      </div>
-      <div class="reveal">
-        <span class="eyebrow">A ciência por trás</span>
-        <h2>Tudo começa no intestino.</h2>
-        <p class="lede">A microbiota intestinal é o centro da saúde animal. Nossos aditivos atuam diretamente nesse ecossistema, fortalecendo as colônias benéficas e equilibrando o organismo de dentro para fora.</p>
-        <div class="sci-list">
-          <div class="sci-item"><div class="k">01</div><div class="v"><strong>Modulação seletiva</strong><span>Estímulo às bactérias benéficas e controle dos patógenos oportunistas.</span></div></div>
-          <div class="sci-item"><div class="k">02</div><div class="v"><strong>Integridade da barreira</strong><span>Reforço da mucosa intestinal e da absorção de nutrientes.</span></div></div>
-          <div class="sci-item"><div class="k">03</div><div class="v"><strong>Resposta imune</strong><span>Animais mais resilientes, com menor dependência de antimicrobianos.</span></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ===== SOBRE / STATS ===== -->
 <section id="sobre">
@@ -606,6 +880,32 @@
   var statsObs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) runCounts(); }); }, {threshold:0.4});
   var statsEl = document.querySelector('.stats');
   if(statsEl) statsObs.observe(statsEl);
+
+  /* ===== CARROSSEL DE PRODUTOS (hover troca a imagem inteira) ===== */
+  const band = document.getElementById('prodband');
+
+  if (band) {
+
+      const pbs = band.querySelectorAll('.pb');
+      const zones = band.querySelectorAll('.pz');
+
+      function activate(index){
+
+          pbs.forEach((img,i)=>{
+              img.classList.toggle('on', i === index);
+          });
+
+      }
+
+      zones.forEach((zone,index)=>{
+
+          zone.addEventListener('mouseenter',()=>{
+              activate(index);
+          });
+
+      });
+
+  }
 
   /* ===== CURSOR SPARKLE TRAIL (multicolor Aleris) ===== */
   var canvas = document.getElementById('fx');
